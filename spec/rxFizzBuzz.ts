@@ -1,8 +1,6 @@
 import { Observable, map } from 'rxjs';
 
-export function doTheFizzy(): (
-  source: Observable<number>
-) => Observable<number | string> {
+export function doTheFizzy() {
   return function (source: Observable<number>) {
     return source.pipe(fizzBuzz(), fizz(), buzz());
   };
