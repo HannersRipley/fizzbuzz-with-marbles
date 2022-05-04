@@ -1,27 +1,31 @@
-import { iif, Observable, of, mergeMap } from 'rxjs';
+import { iif, Observable, map, mergeMap } from 'rxjs';
 
-export function fizzBuzz(): (
+export function doTheFizzy(): (
   source: Observable<number>
 ) => Observable<number | string> {
   return function (source: Observable<number>) {
-    return source.pipe(
-      mergeMap((val) => iif(() => modN(val, 3), fizz(source), buzz(source)))
-    );
+    return source.pipe(fizzBuzz(source), fizz(source), buzz(source));
   };
 }
 
-function fizz(source: Observable<number>): Observable<string> {
-  return source.pipe(
-    mergeMap((val) => iif(() => this.modN(val, 5), of('fizzbuzz'), of('fizz')))
+function fizz(source: Observable<number>) {
+  return map((val: number | string) => (modOrString(val, 3) ? 'fizz' : val));
+}
+
+function buzz(source: Observable<number>) {
+  return map((val: number | string) => (modOrString(val, 5) ? 'buzz' : val));
+}
+
+function fizzBuzz(source: Observable<number>) {
+  return map((val: number | string) =>
+    modOrString(val, 15) ? 'fizzbuzz' : val
   );
 }
 
-function buzz(source: Observable<number>): Observable<number | string> {
-  return source.pipe(
-    mergeMap((val) => iif(() => modN(val, 5), of('buzz'), of(val)))
-  );
+function modOrString(value: number | string, n: number): boolean {
+  return isNumber(value) && (value as number) % n === 0;
 }
 
-function modN(int: number, n: number): boolean {
-  return int % n === 0;
+function isNumber(n: any) {
+  return !isNaN(parseFloat(n)) && !isNaN(n - 0);
 }
