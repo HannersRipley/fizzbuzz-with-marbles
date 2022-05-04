@@ -1,4 +1,4 @@
-import { iif, Observable, map, mergeMap } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 export function doTheFizzy(): (
   source: Observable<number>
