@@ -4,19 +4,19 @@ export function doTheFizzy(): (
   source: Observable<number>
 ) => Observable<number | string> {
   return function (source: Observable<number>) {
-    return source.pipe(fizzBuzz(source), fizz(source), buzz(source));
+    return source.pipe(fizzBuzz(), fizz(), buzz());
   };
 }
 
-function fizz(source: Observable<number>) {
+function fizz() {
   return map((val: number | string) => (modOrString(val, 3) ? 'fizz' : val));
 }
 
-function buzz(source: Observable<number>) {
+function buzz() {
   return map((val: number | string) => (modOrString(val, 5) ? 'buzz' : val));
 }
 
-function fizzBuzz(source: Observable<number>) {
+function fizzBuzz() {
   return map((val: number | string) =>
     modOrString(val, 15) ? 'fizzbuzz' : val
   );
