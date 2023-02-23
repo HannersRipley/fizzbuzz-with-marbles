@@ -21,9 +21,5 @@ function fizzBuzz() {
 }
 
 function modOrString(value: number | string, n: number): boolean {
-  return isNumber(value) && (value as number) % n === 0;
-}
-
-function isNumber(n: any) {
-  return !isNaN(parseFloat(n)) && !isNaN(n - 0);
+  return !Number.isNaN(value) && (value as number) % n === 0;
 }
